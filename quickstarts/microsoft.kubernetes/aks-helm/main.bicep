@@ -15,7 +15,7 @@ param osDiskSizeGB int = 0
 @description('The number of nodes for the cluster.')
 @minValue(1)
 @maxValue(50)
-param agentCount int = 3
+param agentCount int = 1
 
 @description('The size of the Virtual Machine.')
 param agentVMSize string = 'Standard_D2s_v3'
@@ -27,11 +27,11 @@ param linuxAdminUsername string
 param sshRSAPublicKey string
 
 @description('The base URI where artifacts required by this template are located')
-param _artifactsLocation string = deployment().properties.templateLink.uri
+param artifactsLocation string
 
 @description('The sasToken required to access artifacts')
 @secure()
-param _artifactsLocationSasToken string = ''
+param artifactsLocationSasToken string = ''
 
 @description('Public Helm Repo Name')
 param helmRepo string = 'azure-marketplace'
@@ -80,8 +80,8 @@ module helm 'modules/helm.bicep' = {
   name: 'HelmScripts'
   params: {
     location                  : location
-    _artifactsLocation        : _artifactsLocation
-    _artifactsLocationSasToken: _artifactsLocationSasToken
+    _artifactsLocation        : artifactsLocation
+    _artifactsLocationSasToken: artifactsLocationSasToken
     clusterName               : clusterName
     helmRepo                  : helmRepo
     helmRepoURL               : helmRepoURL

@@ -32,22 +32,6 @@ This template deploys an **AKS cluster**. To learn more about how to deploy the 
 
 For information about how to deploy an AKS cluster using Azure CLI, see the [quickstart](https://docs.microsoft.com/azure/aks/kubernetes-walkthrough) article.
 
-## Keys
-
-To use keys stored in `keyVault`, replace `"value":""` with a reference to `keyVault` in the parameters file. For example:
-
-```json
-"servicePrincipalClientSecret": {
-  "reference": {
-    "keyVault": {
-      "id": "<specify Resource ID of the Key Vault you are using>"
-    },
-    "secretName": "<specify name of the secret in the Key Vault to get the service principal password from>"
-  }
-}
-```
-
-`Tags: Microsoft.ContainerService/managedClusters, SystemAssigned`
 
 ## Deploy the Bicep file
 
@@ -62,6 +46,27 @@ ssh-keygen -t rsa -b 4096
 
 ```ps
 az group create --name myResourceGroup --location eastus
-az deployment group create --resource-group myResourceGroup --template-file main.bicep --parameters clusterName=<cluster-name> dnsPrefix=<dns-previs> linuxAdminUsername=<linux-admin-username> sshRSAPublicKey='<ssh-key>'
+az deployment group create --resource-group myResourceGroup --template-file main.bicep --parameters clusterName=<cluster-name> dnsPrefix=<dns-previs> linuxAdminUsername=<linux-admin-username> sshRSAPublicKey='<ssh-key> _artifactsLocation='https://raw.githubusercontent.com/ricardona/bicep-firsts-steps-intro/master/quickstarts/microsoft.kubernetes/aks-helm/'
 ```
+
+Provide the following values in the commands:
+
+- Cluster name: Enter a unique name for the AKS cluster, such as `myAKSCluster`.
+- DNS prefix: Enter a unique DNS prefix for your cluster, such as `myakscluster`.
+- Linux Admin Username: Enter a username to connect using SSH, such as `azureuser`.
+- SSH RSA Public Key: Copy and paste the public part of your SSH key pair (by default, the contents of ~/.ssh/id_rsa.pub).
+- Artifacts location: For the artifacts location, they need to accessible from an internet http location. Either anonymously or secured with a token in its query string. This can be from a github repo or from an azure storage account.
+
+It takes a few minutes to create the AKS cluster. Wait for the cluster to be successfully deployed before you move on to the next step.
+
+## References
+
+[What is Bicep?] (https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/overview?tabs=bicep)
+
+[Original templates from Azure Quickstart Templates]
+(https://github.com/kabeer81/azure-quickstart-templates)
+
+[Quickstart: Deploy an Azure Kubernetes Service (AKS) cluster using Bicep] (https://learn.microsoft.com/en-us/azure/aks/learn/quick-kubernetes-deploy-bicep?toc=%2Fazure%2Fazure-resource-manager%2Fbicep%2Ftoc.json&tabs=azure-cli%2CCLI)
+
+[Fundamentals of Bicep] (https://learn.microsoft.com/en-us/training/paths/fundamentals-bicep/)
 
