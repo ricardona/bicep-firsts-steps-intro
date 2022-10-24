@@ -46,7 +46,7 @@ ssh-keygen -t rsa -b 4096
 
 ```ps
 az group create --name myResourceGroup --location eastus
-az deployment group create --resource-group myResourceGroup --template-file main.bicep --parameters clusterName=<cluster-name> dnsPrefix=<dns-previs> linuxAdminUsername=<linux-admin-username> sshRSAPublicKey='<ssh-key> _artifactsLocation='https://raw.githubusercontent.com/ricardona/bicep-firsts-steps-intro/master/quickstarts/microsoft.kubernetes/aks-helm/'
+az deployment group create --resource-group myResourceGroup --template-file main.bicep --parameters clusterName=<cluster-name> dnsPrefix=<dns-previs> linuxAdminUsername=<linux-admin-username> sshRSAPublicKey='<ssh-key> artifactsLocation='https://raw.githubusercontent.com/ricardona/bicep-firsts-steps-intro/master/quickstarts/microsoft.kubernetes/aks-helm/'
 ```
 
 Provide the following values in the commands:
